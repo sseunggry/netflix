@@ -3,8 +3,9 @@ import styled from "styled-components";
 import {makeImagePath} from "../utils";
 import {useHistory} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
-import {ITvProps} from "../api";
+import {IDataProps, IMovieProps, ITvProps} from "../api";
 import TvSliderPop from "./TvSliderPop";
+import SearchSliderPop from "./SearchSliderPop";
 
 const SlideWrap = styled.div`
   position: relative;
@@ -86,7 +87,7 @@ const BtnCon = styled.div`
     color: #fff;
     cursor: pointer;
   }
-
+  
   svg {
     width: 30px;
     height: 30px;
@@ -104,7 +105,7 @@ const BtnCon = styled.div`
 
 const offset = 6;
 
-function TvSlider({data, name}:ITvProps) {
+function SearchSlider({data, name}:IDataProps) {
     const history = useHistory();
     const [index, setIndex] = useState(0);
     const [back, setBack] = useState(false);
@@ -126,8 +127,8 @@ function TvSlider({data, name}:ITvProps) {
         }
     }
     
-    const onBoxClicked = (tvId:number) => {
-        history.push(`/tv/${name}/${tvId}`);
+    const onBoxClicked = (dataId:number) => {
+        history.push(`/search/${name}/${dataId}`);
     }
     
     const slideRef = useRef<HTMLDivElement>(null);
@@ -137,7 +138,6 @@ function TvSlider({data, name}:ITvProps) {
         slideRef.current.style.transform = `translateX(-${index}00%)`;
     }, [index]);
     
-    // console.log(data);
     return (
         <>
             <SlideWrap>
@@ -149,19 +149,18 @@ function TvSlider({data, name}:ITvProps) {
                         ref={slideRef}
                     >
                         {data?.results.slice(1)
-                            .map(tv => (
+                            .map(item => (
                                 <Slide
                                     className="list"
-                                    layoutId={tv.id + name}
-                                    key={tv.id + name}
-                                    onClick={() => onBoxClicked(tv.id)}
+                                    layoutId={item.id + name}
+                                    key={item.id + name}
                                 >
                                     <ImgCon>
-                                        <img src={makeImagePath(tv.poster_path, "w500")} alt=""/>
+                                        <img src={makeImagePath(item.poster_path, "w500")} alt=""/>
                                     </ImgCon>
                                     <InfoCon>
-                                        <h4>{tv.name}</h4>
-                                        <p>{tv.first_air_date}</p>
+                                        <h4>{item.name || item.title}</h4>
+                                        <p>{item.first_air_date || item.release_date}</p>
                                     </InfoCon>
                                 </Slide>
                             ))}
@@ -180,10 +179,8 @@ function TvSlider({data, name}:ITvProps) {
                     </button>
                 </BtnCon>
             </SlideWrap>
-            
-            <TvSliderPop data={data} name={name}/>
         </>
     )
 }
 
-export default TvSlider;
+export default SearchSlider;

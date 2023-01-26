@@ -25,13 +25,8 @@ const SlideCon = styled.div`
 `;
 const Row = styled(motion.div)`
   display: flex;
-  //display: grid;
-  //grid-template-columns: repeat(6, 1fr);
-  //gap: 20px;
   width: 100%;
 `;
-// <{bgphoto:string}>
-// background: url(${props => props.bgphoto}) no-repeat center/cover;
 const Slide = styled(motion.div)`
   flex-shrink: 0;
   width: 210px;
@@ -70,21 +65,6 @@ const ImgCon = styled.div`
   }
 `;
 
-const Info = styled(motion.div)`
-  position: absolute;
-  padding: 10px;
-  background-color: ${(props) => props.theme.black.lighter};
-  opacity: 0;
-  width: 100%;
-  border-radius: 0 0 20px 20px;
-  bottom: 0;
-  
-  h4 {
-    text-align: center;
-    font-size: 18px;
-  }
-`;
-
 const InfoCon = styled.div`
   h4{
     margin: 20px 0 10px;
@@ -106,6 +86,13 @@ const BtnCon = styled.div`
     transform: translateY(-50%);
     z-index: 1;
     color: #fff;
+    cursor: pointer;
+  }
+
+  svg {
+    width: 30px;
+    height: 30px;
+    fill: #fff;
   }
   
   .prev{
@@ -116,34 +103,12 @@ const BtnCon = styled.div`
     right: 0;
   }
 `;
-
-const rowVariants = {
-    hidden: (back:boolean) => ({
-        x: back ? -window.outerWidth - 5 : window.outerWidth + 5
-    }),
-    visible: {x: 0},
-    exit: (back:boolean) => ({
-        x: back ? window.outerWidth + 5 : -window.outerWidth - 5
-    })
-}
-
-const BoxVariants = {
-    normal : {scale: 1},
-    hover : {zIndex: 99, scale: 1, y: -30, transition: {delay: 0.3, duration: 0.1, type: "tween"}}
-}
-
-const infoVariants = {
-    hover: {opacity: 1, transition: {delay: 0.5, duration: 0.2, type: "tween"}}
-}
-
 const offset = 6;
 
 function MovieSlider({data, name}:IMovieProps) {
     const history = useHistory();
     const [index, setIndex] = useState(0);
-    const [leaving, setLeaving] = useState(false);
     const [back, setBack] = useState(false);
-    const [direct, setDirect] = useState(1);
     
     const increaseIndex = () => {
         if(data) {
@@ -173,7 +138,7 @@ function MovieSlider({data, name}:IMovieProps) {
         slideRef.current.style.transform = `translateX(-${index}00%)`;
     }, [index]);
     
-    // console.log(data);
+    console.log(name);
     return (
         <>
             <SlideWrap>
@@ -185,7 +150,6 @@ function MovieSlider({data, name}:IMovieProps) {
                         ref={slideRef}
                     >
                         {data?.results.slice(1)
-                            // .slice(offset * index, offset * index + offset)
                             .map(movie => (
                                 <Slide
                                     className="list"
@@ -205,8 +169,16 @@ function MovieSlider({data, name}:IMovieProps) {
                     </Row>
                 </SlideCon>
                 <BtnCon>
-                    <button onClick={decreaseIndex} className="prev">이전</button>
-                    <button onClick={increaseIndex} className="next">이후</button>
+                    <button onClick={decreaseIndex} className="prev">
+                        <svg viewBox="0 0 16 16" width="16" height="16">
+                            <path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                    </button>
+                    <button onClick={increaseIndex} className="next">
+                        <svg viewBox="0 0 16 16" width="16" height="16">
+                            <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </button>
                 </BtnCon>
             </SlideWrap>
             

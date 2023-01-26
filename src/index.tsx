@@ -24,7 +24,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
     font: inherit;
     vertical-align: baseline;
   }
@@ -49,11 +48,16 @@ const GlobalStyle = createGlobalStyle`
   blockquote:before, blockquote:after,
   q:before, q:after {
     content: '';
-    content: none;
   }
   table {
     border-collapse: collapse;
     border-spacing: 0;
+  }
+  input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-style: none;
   }
   * {
     box-sizing: border-box;
@@ -73,10 +77,6 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: none;
     background-color: transparent;
-    //border-width: 0;
-    //border-style: none;
-    //border-color: transparent;
-    //border-image: initial;
   }
 `;
 

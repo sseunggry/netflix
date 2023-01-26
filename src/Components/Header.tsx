@@ -36,7 +36,7 @@ const Items = styled(motion.ul)`
 `;
 const Item = styled.li`
   + li{margin-left: 20px;}
-  color: ${(props) => props.theme.black.darker};
+  color: ${(props) => props.theme.white.lighter};
   transition: color 0.3s ease-in-out;
   position: relative;
   display: flex;
@@ -44,7 +44,7 @@ const Item = styled.li`
   flex-direction: column;
   font-weight: 500;
   
-  &:hover{
+  &:hover, &.active{
     color: ${(props) => props.theme.red};
   }
 `;
@@ -53,8 +53,10 @@ const Search = styled.form`
   display: flex;
   align-items: center;
   color: #fff;
+  cursor: pointer;
+  
   svg {
-    height: 25px;
+    height: 22px;
   }
 `;
 const Circle = styled(motion.span)`
@@ -77,8 +79,13 @@ const Input = styled(motion.input)`
   z-index: -1;
   color: white;
   font-size: 16px;
-  background-color: transparent;
-  border: 1px solid ${(props) => props.theme.white.lighter};
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.3);
+  
+  &::placeholder{
+    color: #fff;
+    opacity: 0.5;
+  }
 `;
 
 const logoVariants = {
@@ -163,14 +170,12 @@ function Header() {
                         <Link to="/">
                             Movies
                             {homeMatch?.isExact && <Circle layoutId="circle" />}
-                            {/*{homeMatch?.isExact ? <Circle /> : null}*/}
                         </Link>
                     </Item>
                     <Item>
                         <Link to="/TV">
                             Tv Shows
                             {tvMatch && <Circle layoutId="circle" />}
-                            {/*{tvMatch ? <Circle /> : null}*/}
                         </Link>
                     </Item>
                 </Items>

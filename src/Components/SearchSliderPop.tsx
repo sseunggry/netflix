@@ -2,7 +2,7 @@ import {useHistory, useRouteMatch} from "react-router-dom";
 import {AnimatePresence, motion, useViewportScroll} from "framer-motion";
 import {makeImagePath} from "../utils";
 import styled from "styled-components";
-import {ITvProps} from "../api";
+import {IDataProps, IMovieProps, ITvProps} from "../api";
 
 const Overlay = styled(motion.div)`
   position: fixed;
@@ -70,14 +70,14 @@ const InfoTxt = styled.div`
   }
 `;
 
-function TvSliderPop({data, name}:ITvProps){
+function SearchSliderPop({data, name}:IDataProps){
     const history = useHistory();
-    const bigTvMatch = useRouteMatch<{tvId: string}>(`/tv/${name}/:tvId`);
+    const bigTvMatch = useRouteMatch<{DataId: string}>(`/${data}/${name}/:tvId`);
     const {scrollY} = useViewportScroll();
     
     const onOverlayClick = () => history.push("/");
-    const clickedTv = bigTvMatch?.params.tvId &&
-        data?.results.find((tv) => tv.id === +bigTvMatch.params.tvId);
+    const clickedTv = bigTvMatch?.params.DataId &&
+        data?.results.find((data) => data.id === +bigTvMatch.params.DataId);
     
     return (
         <AnimatePresence>
@@ -89,18 +89,18 @@ function TvSliderPop({data, name}:ITvProps){
                         animate={{ opacity: 1 }}
                     />
                     <Detail
-                        layoutId={bigTvMatch.params.tvId + name}
+                        layoutId={bigTvMatch.params.DataId + name}
                         style={{ top: scrollY.get() + 100 }}
                     >
                         {clickedTv && (
                             <>
                                 <Cover
                                     style={{backgroundImage: `linear-gradient(to top, #000, transparent),
-                                                url(${makeImagePath(clickedTv.backdrop_path, "w500")})`}}
+                                                url(${makeImagePath(clickedTv.backdrop_path!, "w500")})`}}
                                 />
                                 <Title>
                                     <h3>{clickedTv.name}</h3>
-                                    <span>{clickedTv.original_name}</span>
+                                    {/*<span>{clickedTv.original_name}</span>*/}
                                 </Title>
                                 <InfoTxt>
                                     <span>평점 {clickedTv.vote_average}</span>
@@ -116,4 +116,4 @@ function TvSliderPop({data, name}:ITvProps){
     )
 }
 
-export default TvSliderPop;
+export default SearchSliderPop;
