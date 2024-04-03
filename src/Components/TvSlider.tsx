@@ -137,7 +137,6 @@ function TvSlider({data, name}:ITvProps) {
         slideRef.current.style.transform = `translateX(-${index}00%)`;
     }, [index]);
     
-    // console.log(data);
     return (
         <>
             <SlideWrap>

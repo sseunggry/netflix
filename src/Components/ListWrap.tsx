@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {makeImagePath} from "../utils";
 import {useQuery} from "react-query";
-import {getMovies, IGetMoviesResult} from "../api";
+import {getData, IGetMoviesResult} from "../api";
 
 const ListCon = styled.div`
   padding: 40px 60px 0;
@@ -61,15 +61,15 @@ interface IPropsType {
 
 function ListWrap({title, dataName} :IPropsType) {
     const {data: popular, isLoading: popularLoading} = useQuery<IGetMoviesResult>(
-        ["movies", "popular"], () => getMovies("popular")
+        ["movies", "popular"], () => getData('movie','popular')
     );
     
     const {data: best, isLoading: bestLoading} = useQuery<IGetMoviesResult>(
-        ["movies", "best"], () => getMovies("top_rated")
+        ["movies", "best"], () => getData('movie', 'top_rated')
     );
     
     const {data: upcoming, isLoading: upcomingLoading} = useQuery<IGetMoviesResult>(
-        ["movies", "upcoming"], () => getMovies("upcoming")
+        ["movies", "upcoming"], () => getData('movie', 'upcoming')
     );
 
     return (

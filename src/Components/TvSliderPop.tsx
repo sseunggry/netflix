@@ -75,7 +75,7 @@ function TvSliderPop({data, name}:ITvProps){
     const bigTvMatch = useRouteMatch<{tvId: string}>(`/tv/${name}/:tvId`);
     const {scrollY} = useViewportScroll();
     
-    const onOverlayClick = () => history.push("/");
+    const onOverlayClick = () => history.push("/tv");
     const clickedTv = bigTvMatch?.params.tvId &&
         data?.results.find((tv) => tv.id === +bigTvMatch.params.tvId);
     

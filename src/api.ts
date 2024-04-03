@@ -82,72 +82,14 @@ interface IData {
     first_air_date?: string;
 }
 
-// export interface IGetResult {
-//     data: {
-//         page: number;
-//         results: [IMovie];
-//         total_pages: number;
-//         total_results: number;
-//     },
-//     isLoading: boolean;
-// }
-
-export function getMovies(sort: string) {
-    return fetch(`${BASE_PATH}/movie/${sort}?api_key=${API_KEY}`).then(
+export function getData(kind: string, sort: string) {
+    return fetch(`${BASE_PATH}/${kind}/${sort}?api_key=${API_KEY}&language=ko`).then(
         (response) => response.json()
     );
-}
-
-export function getMoviesNowPlay() {
-    return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}&language=ko`).then(
-        (response) => response.json()
-    );
-}
-
-export function getMoviesLatest() {
-    return fetch(`${BASE_PATH}/movie/latest?api_key=${API_KEY}&language=ko`).then(
-        (response) => response.json()
-    )
-}
-
-export function getMoviesTopRated() {
-    return fetch(`${BASE_PATH}/movie/top_rated?api_key=${API_KEY}&language=ko`).then(
-        (response) => response.json()
-    )
-}
-
-export function getMoviesUpComing() {
-    return fetch(`${BASE_PATH}/movie/upcoming?api_key=${API_KEY}&language=ko`).then(
-        (response) => response.json()
-    )
 }
 
 export function getSearch(keyword: string, category: string) {
     return fetch(`${BASE_PATH}/search/${category}?api_key=${API_KEY}&query=${keyword}&language=ko`).then(
         (response) => response.json()
     );
-}
-
-export function getTvLatest() {
-    return fetch(`${BASE_PATH}/tv/latest?api_key=${API_KEY}&language=ko`).then(
-        (response) => response.json()
-    )
-}
-
-export function getTvAiring() {
-    return fetch(`${BASE_PATH}/tv/airing_today?api_key=${API_KEY}&language=ko`).then(
-        (response) => response.json()
-    )
-}
-
-export function getTvPopular() {
-    return fetch(`${BASE_PATH}/tv/popular?api_key=${API_KEY}&language=ko`).then(
-        (response) => response.json()
-    )
-}
-
-export function getTvTopRated() {
-    return fetch(`${BASE_PATH}/tv/top_rated?api_key=${API_KEY}&language=ko`).then(
-        (response) => response.json()
-    )
 }

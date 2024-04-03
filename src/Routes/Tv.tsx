@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {makeImagePath} from "../utils";
-import {getTvAiring, getTvLatest, getTvPopular, getTvTopRated, IGetTvResult} from "../api";
+import {getData, IGetTvResult} from "../api";
 import {useQuery} from "react-query";
 import TvSlider from "../Components/TvSlider";
 
@@ -26,26 +26,19 @@ const Banner = styled.div<{bgphoto:string}>`
 const Title = styled.h2`
   margin-bottom: 20px;
   font-size: 50px;
-  font-weight: 500;
+  font-weight: 700;
 `;
-const Overview = styled.p`
-  overflow: hidden;
-  display: -webkit-box;
-  width: 40%;
-  height: 88px;
+const Date = styled.p`
   font-size: 20px;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  line-height: 1.4;
+  letter-spacing: 0.5px;
 `;
 
 function Tv() {
     const useMultipleQuery = () => {
-        const airing = useQuery<IGetTvResult>(["airing"], getTvAiring);
-        const latest = useQuery<IGetTvResult>(["latest"], getTvLatest);
-        const topRated = useQuery<IGetTvResult>(["topRated"], getTvTopRated);
-        const popular = useQuery<IGetTvResult>(["popular"], getTvPopular);
+        const airing = useQuery<IGetTvResult>(["airing"], () => getData('tv', 'airing_today'));
+        const latest = useQuery<IGetTvResult>(["latest"], () => getData('tv', 'latest'));
+        const topRated = useQuery<IGetTvResult>(["topRated"], () => getData('tv', 'top_rated'));
+        const popular = useQuery<IGetTvResult>(["popular"], () => getData('tv', 'popular'));
         
         return [airing, latest, topRated, popular];
     }
@@ -61,16 +54,16 @@ function Tv() {
         <Wrapper>
             {airingLoading ? <Loader>Loading...</Loader> : (
                 <>
-                    <Banner bgphoto={makeImagePath(popularData?.results[0].backdrop_path || "")}>
-                        <Title>{popularData?.results[0].name}</Title>
-                        <Overview>{popularData?.results[0].original_name}</Overview>
+                    <Banner bgphoto={makeImagePath(airingData?.results[0].backdrop_path || "")}>
+                        <Title>{airingData?.results[0].name}</Title>
+                        <Date>{airingData?.results[0].first_air_date.replace(/-/g, '.')}</Date>
                     </Banner>
             
-                    <TvSlider data={airingData!} name="nowPlay"/>
-                    <TvSlider data={topRatedData!} name="topRated"/>
-                    <TvSlider data={popularData!} name="upComing"/>
+                    <TvSlider data={airingData!} name="airing"/>
                 </>
             )}
+            {topRatedLoading ? <Loader>Loading...</Loader> : <TvSlider data={topRatedData!} name="topRated"/>}
+            {popularLoading ? <Loader>Loading...</Loader> : <TvSlider data={popularData!} name="popular"/>}
         </Wrapper>
     );
 }

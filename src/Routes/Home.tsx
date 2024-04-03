@@ -1,9 +1,5 @@
 import {useQuery} from "react-query";
-import {
-    getMoviesLatest,
-    getMoviesNowPlay, getMoviesTopRated, getMoviesUpComing,
-    IGetMoviesResult
-} from "../api";
+import {getData, IGetMoviesResult} from "../api";
 import styled from "styled-components";
 import {makeImagePath} from "../utils";
 import MovieSlider from "../Components/MovieSlider";
@@ -25,20 +21,9 @@ const Banner = styled.div<{bgphoto:string}>`
   justify-content: center;
   align-items: center;
   padding: 60px;
-  height: 800px;
-  text-align: center;
-  // background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${props => props.bgphoto});
-  background-image: url(${props => props.bgphoto});
+  height: 700px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${props => props.bgphoto});
   background-size: cover;
-
-  &::after{
-    content: '';
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
 `;
 const TxtBox = styled.div`
   position: relative;
@@ -56,7 +41,6 @@ const Title = styled.h2`
 const Overview = styled.p`
   overflow: hidden;
   display: -webkit-box;
-  margin: 0 auto;
   width: 60%;
   height: 46px;
   font-size: 16px;
@@ -69,10 +53,10 @@ const Overview = styled.p`
 
 function Home() {
     const useMultipleQuery = () => {
-        const nowPlay = useQuery<IGetMoviesResult>(["nowPlaying"], getMoviesNowPlay);
-        const latest = useQuery<IGetMoviesResult>(["latest"], getMoviesLatest);
-        const topRated = useQuery<IGetMoviesResult>(["topRated"], getMoviesTopRated);
-        const upComing = useQuery<IGetMoviesResult>(["upComing"], getMoviesUpComing);
+        const nowPlay = useQuery<IGetMoviesResult>(["nowPlaying"], () => getData('movie', 'now_playing'));
+        const latest = useQuery<IGetMoviesResult>(["latest"], () => getData('movie','latest'));
+        const topRated = useQuery<IGetMoviesResult>(["topRated"], () => getData('movie','top_rated'));
+        const upComing = useQuery<IGetMoviesResult>(["upComing"], () => getData('movie','upcoming'));
       
         return [nowPlay, latest, topRated, upComing];
     };
@@ -83,8 +67,6 @@ function Home() {
         {isLoading: topRatedLoading, data: topRatedData},
         {isLoading: upComingLoading, data: upComingData}
     ] = useMultipleQuery();
-
-    console.log(nowPlayData);
     
     return (
         <Wrapper>

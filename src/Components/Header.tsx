@@ -56,7 +56,9 @@ const Search = styled.form`
   cursor: pointer;
   
   svg {
+    position: relative;
     height: 22px;
+    z-index: 1;
   }
 `;
 const Circle = styled(motion.span)`
@@ -76,7 +78,6 @@ const Input = styled(motion.input)`
   transform-origin: right center;
   right: 0;
   padding: 5px 10px 5px 40px;
-  z-index: -1;
   color: white;
   font-size: 16px;
   border-radius: 30px;
@@ -122,7 +123,6 @@ function Header() {
     const colorAnimation = useAnimation();
     const {scrollY} = useScroll();
     useEffect(() => {
-        // scrollY.on('change', () => console.log(scrollY.get()));
         scrollY.on('change', () => {
             if(scrollY.get() > 80) {
                 navAnimation.start("scroll");
@@ -184,7 +184,7 @@ function Header() {
                 <Search onSubmit={handleSubmit(onValid)}>
                     <motion.svg
                         onClick={toggleSearch}
-                        animate={{ x: searchOpen ? -180 : 0 }}
+                        animate={{ x: searchOpen ? -215 : 0 }}
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
