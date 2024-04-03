@@ -19,29 +19,51 @@ const Loader = styled.div`
   align-items: center;
 `;
 const Banner = styled.div<{bgphoto:string}>`
+  position: relative;
   display: flex;
-  height: 600px;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: 60px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${props => props.bgphoto});
+  height: 800px;
+  text-align: center;
+  // background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)), url(${props => props.bgphoto});
+  background-image: url(${props => props.bgphoto});
   background-size: cover;
+
+  &::after{
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+`;
+const TxtBox = styled.div`
+  position: relative;
+  z-index: 1;
+`;
+const SubTit = styled.p`
+  font-size: 32px;
+  font-weight: 500;
 `;
 const Title = styled.h2`
-  margin-bottom: 20px;
-  font-size: 50px;
-  font-weight: 500;
+  margin: 20px 0 40px;
+  font-size: 60px;
+  font-weight: 700;
 `;
 const Overview = styled.p`
   overflow: hidden;
   display: -webkit-box;
-  width: 40%;
-  height: 88px;
-  font-size: 20px;
+  margin: 0 auto;
+  width: 60%;
+  height: 46px;
+  font-size: 16px;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  line-height: 1.4;
+  line-height: 1.6;
 `;
 
 
@@ -61,21 +83,25 @@ function Home() {
         {isLoading: topRatedLoading, data: topRatedData},
         {isLoading: upComingLoading, data: upComingData}
     ] = useMultipleQuery();
+
+    console.log(nowPlayData);
     
     return (
         <Wrapper>
             {nowPlayLoading ? <Loader>Loading...</Loader> : (
-                <>
-                    <Banner bgphoto={makeImagePath(nowPlayData?.results[0].backdrop_path || "")}>
-                        <Title>{nowPlayData?.results[0].title}</Title>
-                        <Overview>{nowPlayData?.results[0].overview}</Overview>
-                    </Banner>
-
-                    <MovieSlider data={nowPlayData!} name="nowPlay"/>
-                    <MovieSlider data={topRatedData!} name="topRated"/>
-                    <MovieSlider data={upComingData!} name="upComing"/>
-                </>
+              <>
+                <Banner bgphoto={makeImagePath(nowPlayData?.results[0].backdrop_path || "")}>
+                    <TxtBox>
+                      <SubTit>{nowPlayData?.results[0].original_title}</SubTit>
+                      <Title>{nowPlayData?.results[0].title}</Title>
+                      <Overview>{nowPlayData?.results[0].overview}</Overview>
+                    </TxtBox>
+                </Banner>
+                <MovieSlider data={nowPlayData!} name="nowPlay"/>
+              </>
             )}
+            {topRatedLoading ? <Loader>Loading...</Loader> : <MovieSlider data={topRatedData!} name="topRated"/>}
+            {upComingLoading ? <Loader>Loading...</Loader> : <MovieSlider data={upComingData!} name="upComing"/>}
         </Wrapper>
     );
 }

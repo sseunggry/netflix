@@ -52,6 +52,36 @@ export interface ITvProps{
     data: IGetTvResult;
 }
 
+export interface IDataProps {
+    name: string;
+    data: IGetDataResult;
+}
+
+export interface IGetDataResult {
+    dates?: {
+        maximum: string;
+        minimum: string;
+    };
+    page: number;
+    results: [IData];
+    total_pages: number;
+    total_results: number;
+}
+
+interface IData {
+    id: number;
+    backdrop_path: string;
+    poster_path: string;
+    overview: string;
+    title?: string;
+    name?: string;
+    release_date?: string;
+    vote_average?: number;
+    original_title?: string;
+    original_name?: string;
+    first_air_date?: string;
+}
+
 // export interface IGetResult {
 //     data: {
 //         page: number;

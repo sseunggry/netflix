@@ -138,7 +138,6 @@ function MovieSlider({data, name}:IMovieProps) {
         slideRef.current.style.transform = `translateX(-${index}00%)`;
     }, [index]);
     
-    console.log(name);
     return (
         <>
             <SlideWrap>

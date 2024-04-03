@@ -39,48 +39,6 @@ function Search() {
                 </>
             )}
         </Wrapper>
-        // <>
-        //     {movieLoading || tvLoading ? <p>Loading...</p> : (
-        //         <Wrapper>
-        //             <SlideWrap>
-        //                 <Title>Movies</Title>
-        //                 <SlideCon>
-        //                     <Row>
-        //                         {SearchSlider?.results.slice(1).map(movie => (
-        //                             <Slide
-        //                                 className="list"
-        //                                 // layoutId={movie.id}
-        //                                 onClick={() => onBoxClicked(movie.id)}
-        //                                 key={movie.id}
-        //                             >
-        //                                 <ImgCon>
-        //                                     <img src={makeImagePath(movie.poster_path, "w500")} alt=""/>
-        //                                 </ImgCon>
-        //                                 <InfoCon>
-        //                                     <h4>{movie.title}</h4>
-        //                                     <p>{movie.overview}</p>
-        //                                 </InfoCon>
-        //                             </Slide>
-        //                         ))}
-        //                     </Row>
-        //                 </SlideCon>
-        //             </SlideWrap>
-        //             <ListCon>
-        //                 <Title>Tv</Title>
-        //                 <List>
-        //                     {tvData?.results.map(movie => (
-        //                         <Item key={movie.id}>
-        //                             <img src={makeImagePath(movie.poster_path, "w500")} alt=""/>
-        //                             <TextWrap>
-        //                                 <p>{movie.name}</p>
-        //                             </TextWrap>
-        //                         </Item>
-        //                     ))}
-        //                 </List>
-        //             </ListCon>
-        //         </Wrapper>
-        //     )}
-        // </>
     );
 }
 

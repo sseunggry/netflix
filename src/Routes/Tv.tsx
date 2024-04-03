@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {makeImagePath} from "../utils";
-import {getTvAiring, getTvLatest, getTvPopular, getTvTopRated, IGetDataResult, IGetTvResult} from "../api";
+import {getTvAiring, getTvLatest, getTvPopular, getTvTopRated, IGetTvResult} from "../api";
 import {useQuery} from "react-query";
 import TvSlider from "../Components/TvSlider";
 
